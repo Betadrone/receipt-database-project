@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %}
+{% block content%}
+<h1 align="center">Receipt Database</h1>
+<table class="table table-hover table-bordered" id="receipts">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Liters</th>
+            <th>Total Dollar</th>
+            <th>Vehicle</th>
+            <th>Odometer</th>
+            <th>Fuel Card</th>
+            <th>Payment Method</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+            {% for receipt in user.receipts %}
+            <tr id="row_{{ receipt.id }}">
+                <td>{{ receipt.id }}</td>
+                <td>{{ receipt.date }}</td>
+                <td>{{ receipt.time }}</td>
+                <td>{{ receipt.liters }}</td>
+                <td>{{ receipt.total_dollar }}</td>
+                <td>{{ receipt.vehicle }}</td>
+                <td>{{ receipt.odometer }}</td>
+                <td>{{ receipt.fuel_card }}</td>
+                <td>{{ receipt.payment_method }}</td>
+                <td>Actions here</td>
+            </tr>
+            {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
