@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, jsonify
+from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_login import login_required, current_user
 from . import db
 from .models import Note, Receipt
@@ -87,3 +87,13 @@ def receipt():
 @views.route('/database')
 def database():
     return render_template("database.html", user=current_user)
+
+@views.route('/edit_receipt/<int:receiptId>/<string:receiptDate>/<string:receiptTime>/<float:receiptLiters>/<float:receiptTotalDollar>/<int:receiptOdometer>/<int:receiptFuelCard>/<int:receiptPaymentMethod>/<string:receiptVehicle>', methods=['GET', 'POST'])
+def receipt_detail(receiptId, receiptDate, receiptTime, receiptLiters, receiptTotalDollar, receiptOdometer, receiptFuelCard, receiptPaymentMethod, receiptVehicle):
+    if request.method == "POST":
+        pass
+
+    return render_template("edit_receipt.html", user=current_user, id=receiptId, date=receiptDate,
+                           time=receiptTime, liters=receiptLiters, totalDollar=receiptTotalDollar,
+                           vehicle=receiptVehicle,
+                           odometer=receiptOdometer, fuelCard=receiptFuelCard, paymentMethod=receiptPaymentMethod)
