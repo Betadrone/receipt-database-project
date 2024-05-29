@@ -28,9 +28,7 @@
                 <td>{{ receipt.odometer }}</td>
                 <td>{{ receipt.fuel_card }}</td>
                 <td>{{ receipt.payment_method }}</td>
-                <td><a href="{{url_for('views.receipt_detail', receiptId=receipt.id, receiptDate=receipt.date,
-                           receiptTime=receipt.time, receiptLiters=receipt.liters, receiptTotalDollar=receipt.total_dollar, receiptVehicle=receipt.vehicle,
-                           receiptOdometer=receipt.odometer, receiptFuelCard=receipt.fuel_card, receiptPaymentMethod=receipt.payment_method)}}">Edit Receipt</a></td>
+                <td><a href="{{url_for('views.receipt_detail', receiptId=receipt.id)}}">Edit Receipt</a></td>
             </tr>
             {% endfor %}
     </tbody>

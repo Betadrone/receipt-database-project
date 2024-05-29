@@ -88,12 +88,50 @@ def receipt():
 def database():
     return render_template("database.html", user=current_user)
 
-@views.route('/edit_receipt/<int:receiptId>/<string:receiptDate>/<string:receiptTime>/<float:receiptLiters>/<float:receiptTotalDollar>/<int:receiptOdometer>/<int:receiptFuelCard>/<int:receiptPaymentMethod>/<string:receiptVehicle>', methods=['GET', 'POST'])
-def receipt_detail(receiptId, receiptDate, receiptTime, receiptLiters, receiptTotalDollar, receiptOdometer, receiptFuelCard, receiptPaymentMethod, receiptVehicle):
+@views.route('/edit_receipt/<int:receiptId>', methods=['GET', 'POST'])
+def receipt_detail(receiptId):
+    receipt = Receipt.query.filter_by(id=receiptId).first()
     if request.method == "POST":
-        pass
+        date = request.form.get("date")
+        time = request.form.get("time")
+        liters = request.form.get("liters")
+        total_dollar = request.form.get("total_dollar")
+        vehicle = request.form.get("vehicle")
+        odometer = request.form.get("odometer")
+        fuel_card = request.form.get("fuel_card")
+        payment_method = request.form.get("payment_method")
 
-    return render_template("edit_receipt.html", user=current_user, id=receiptId, date=receiptDate,
-                           time=receiptTime, liters=receiptLiters, totalDollar=receiptTotalDollar,
-                           vehicle=receiptVehicle,
-                           odometer=receiptOdometer, fuelCard=receiptFuelCard, paymentMethod=receiptPaymentMethod)
+        if not date:
+            flash("Date missing.", category='error')
+        elif not time:
+            flash("Time missing.", category='error')
+        elif not liters:
+            flash("liters missing.", category='error')
+        elif not total_dollar:
+            flash("total dollars missing.", category='error')
+        elif not vehicle:
+            flash("vehicle number missing.", category='error')
+        elif not odometer:
+            flash("odometer value missing", category='error')
+        elif not fuel_card:
+            flash("fuel card number missing.", category='error')
+        elif not payment_method:
+            flash("payment method value missing.", category='error')
+        else:
+            receipt.date = date
+            receipt.time = time
+            receipt.liters = liters
+            receipt.total_dollar = total_dollar
+            receipt.vehicle = vehicle
+            receipt.odometer = odometer
+            receipt.fuel_card = fuel_card
+            receipt.payment_method = payment_method
+
+            db.session.commit()
+            flash("Receipt edited!", category='success')
+            return redirect(url_for("views.database"))
+
+    return render_template("edit_receipt.html", user=current_user, date=receipt.date,
+                           time=receipt.time, liters=receipt.liters, totalDollar=receipt.total_dollar,
+                           vehicle=receipt.vehicle, odometer=receipt.odometer, fuelCard=receipt.fuel_card,
+                           paymentMethod=receipt.payment_method)
