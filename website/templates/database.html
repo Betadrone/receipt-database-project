@@ -29,6 +29,7 @@
                 <td>{{ receipt.fuel_card }}</td>
                 <td>{{ receipt.payment_method }}</td>
                 <td><a href="{{url_for('views.receipt_detail', receiptId=receipt.id)}}">Edit Receipt</a></td>
+                <td><button type="button" class="close" onClick="deleteReceipt({{ receipt.id }})"><span aria-hidden="true">&times;</span></button></td>
             </tr>
             {% endfor %}
     </tbody>

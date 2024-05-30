@@ -7,3 +7,13 @@ function deleteNote(noteId)
         window.location.href = "/";
     })
 }
+
+function deleteReceipt(receiptId)
+{
+    fetch('/delete-receipt', {
+    method: 'POST',
+    body: JSON.stringify({ receiptId : receiptId})
+    }).then((_res) => {
+        window.location.href = "/database";
+    })
+}

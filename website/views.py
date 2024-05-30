@@ -35,6 +35,20 @@ def delete_note():
             db.session.commit()
     return jsonify({})
 
+
+@views.route('/delete-receipt', methods=['POST'])
+def delete_receipt():
+    receipt = json.loads(request.data)
+    print(receipt)
+    receiptId = receipt['receiptId']
+    receipt = Receipt.query.get(receiptId)
+    if receipt:
+        if receipt.user_id == current_user.id:
+            db.session.delete(receipt)
+            db.session.commit()
+    return jsonify({})
+
+
 @views.route('/receipt', methods=['GET', 'POST'])
 @login_required
 def receipt():
