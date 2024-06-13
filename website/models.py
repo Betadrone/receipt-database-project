@@ -13,6 +13,8 @@ class Receipt(db.Model):
     odometer = db.Column(db.Integer)
     fuel_card = db.Column(db.Integer)
     payment_method = db.Column(db.Integer)
+    user_last_updated = db.Column(db.String(50))
+    date_last_updated = db.Column(db.String(50))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
