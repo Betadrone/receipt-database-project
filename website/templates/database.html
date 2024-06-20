@@ -13,6 +13,8 @@
             <th>Odometer</th>
             <th>Fuel Card</th>
             <th>Payment Method</th>
+            <th>User Last Updated</th>
+            <th>Date Last Updated</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -28,6 +30,8 @@
                 <td>{{ receipt.odometer }}</td>
                 <td>{{ receipt.fuel_card }}</td>
                 <td>{{ receipt.payment_method }}</td>
+                <td>{{ receipt.user_last_updated }}</td>
+                <td>{{ receipt.date_last_updated }}</td>
                 <td><a href="{{url_for('views.receipt_detail', receiptId=receipt.id)}}">Edit Receipt</a></td>
                 <td><button type="button" class="close" onClick="deleteReceipt({{ receipt.id }})"><span aria-hidden="true">&times;</span></button></td>
             </tr>

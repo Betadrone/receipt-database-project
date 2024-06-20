@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_login import login_required, current_user
 from . import db
@@ -88,7 +89,9 @@ def receipt():
                 vehicle=vehicle,
                 odometer=odometer,
                 fuel_card=fuel_card,
-                payment_method=payment_method
+                payment_method=payment_method,
+                user_last_updated=current_user.first_name,
+                date_last_updated=datetime.today().strftime('%Y-%m-%d')
             )
 
             db.session.add(new_receipt)
@@ -102,7 +105,9 @@ def receipt():
 def database():
     return render_template("database.html", user=current_user)
 
+
 @views.route('/edit_receipt/<int:receiptId>', methods=['GET', 'POST'])
+@login_required
 def receipt_detail(receiptId):
     receipt = Receipt.query.filter_by(id=receiptId).first()
     if request.method == "POST":
@@ -140,6 +145,8 @@ def receipt_detail(receiptId):
             receipt.odometer = odometer
             receipt.fuel_card = fuel_card
             receipt.payment_method = payment_method
+            receipt.user_last_updated = current_user.first_name
+            receipt.date_last_updated = datetime.today().strftime('%Y-%m-%d')
 
             db.session.commit()
             flash("Receipt edited!", category='success')
